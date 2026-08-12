@@ -6,13 +6,9 @@ A multi-page project management application with a dashboard, task manager, and 
 
 ## Live Demo
 
-**HTML Version (no install needed):**
-Open `react-project-management_index.html` directly in your browser, or deploy to GitHub Pages:
-```
-https://[your-github-username].github.io/react-project-management/
-```
+**Live:** [https://kareembullard.github.io/pm-dashboard/](https://kareembullard.github.io/pm-dashboard/)
 
-> A full React/Vite version is also included for local development (see below).
+`index.html` is the standalone build served directly from GitHub Pages — no build step, no install needed. `project-management-app_React_index.html` is kept alongside it as the original React/Vite source for local development (see below).
 
 ## Features
 

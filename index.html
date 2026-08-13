@@ -356,12 +356,15 @@ function clone(o) { return JSON.parse(JSON.stringify(o)); }
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return clone(SEED);
+    if (!raw) { const seeded = clone(SEED); persistSeed(seeded); return seeded; }
     const parsed = JSON.parse(raw);
-    if (!parsed || !parsed.project || !Array.isArray(parsed.phases) || !Array.isArray(parsed.wiki)) return clone(SEED);
+    if (!parsed || !parsed.project || !Array.isArray(parsed.phases) || !Array.isArray(parsed.wiki)) { const seeded = clone(SEED); persistSeed(seeded); return seeded; }
     return parsed;
-  } catch (e) { return clone(SEED); }
+  } catch (e) { const seeded = clone(SEED); persistSeed(seeded); return seeded; }
 }
+// Write the seed to localStorage on first visit (not just after the first edit) so sibling
+// apps under kareembullard.github.io can read this app's data as soon as it's been opened once.
+function persistSeed(seeded) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded)); } catch (e) {} }
 function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {} }
 function resetState() { stopTimer(true); state = clone(SEED); activeWiki = state.wiki.length ? state.wiki[0].id : null; saveState(); render(); }
 

@@ -61,6 +61,8 @@
 
   ul.entities { list-style: none; margin: 0; padding: 0; }
   li.entity { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .65rem .9rem; margin-bottom: .5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .4rem; }
+  li.entity.clickable { cursor: pointer; }
+  li.entity.clickable:hover { border-color: var(--accent); }
   li.entity .main { font-weight: 600; font-size: .92rem; }
   li.entity .meta { font-size: .78rem; color: var(--text-dim); }
   li.entity .actions { display: flex; gap: .4rem; align-items: center; }
@@ -782,7 +784,8 @@ function renderTasks() {
 }
 
 function taskRow(t, p) {
-  const li = document.createElement("li"); li.className = "entity" + (t.completed ? " done" : "");
+  const li = document.createElement("li"); li.className = "entity clickable" + (t.completed ? " done" : "");
+  li.addEventListener("click", () => openTaskForm(t.id, p.id));
   const left = document.createElement("div");
   left.style.display = "flex"; left.style.alignItems = "flex-start";
 
@@ -791,7 +794,8 @@ function taskRow(t, p) {
   check.type = "button";
   check.textContent = t.completed ? "☑" : "☐";
   check.title = t.completed ? "Mark as not done" : "Mark as done";
-  check.addEventListener("click", () => {
+  check.addEventListener("click", (e) => {
+    e.stopPropagation();
     if (timer.taskId === t.id) stopTimer(true);
     t.completed = !t.completed;
     saveState(); renderTasks();
@@ -816,20 +820,16 @@ function taskRow(t, p) {
     actions.appendChild(readout);
     const stopBtn = document.createElement("button");
     stopBtn.className = "btn small danger"; stopBtn.textContent = "⏹ Stop";
-    stopBtn.addEventListener("click", () => { stopTimer(false); });
+    stopBtn.addEventListener("click", (e) => { e.stopPropagation(); stopTimer(false); });
     actions.appendChild(stopBtn);
   } else {
     const startBtn = document.createElement("button");
     startBtn.className = "btn small"; startBtn.textContent = "▶ Start";
     startBtn.disabled = !!t.completed;
     startBtn.title = t.completed ? "Task is already complete" : "Start logging time";
-    startBtn.addEventListener("click", () => { if (!t.completed) startTimer(t.id); });
+    startBtn.addEventListener("click", (e) => { e.stopPropagation(); if (!t.completed) startTimer(t.id); });
     actions.appendChild(startBtn);
   }
-  const editBtn = document.createElement("button");
-  editBtn.className = "btn small"; editBtn.textContent = "Edit";
-  editBtn.addEventListener("click", () => openTaskForm(t.id, p.id));
-  actions.appendChild(editBtn);
   li.appendChild(actions);
   return li;
 }

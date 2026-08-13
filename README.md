@@ -8,7 +8,7 @@ A multi-page project management application with a dashboard, task manager, and 
 
 **Live:** [https://kareembullard.github.io/pm-dashboard/](https://kareembullard.github.io/pm-dashboard/)
 
-`index.html` is the standalone build served directly from GitHub Pages — no build step, no install needed. `project-management-app_React_index.html` is kept alongside it as the original React/Vite source for local development (see below).
+`index.html` is the standalone build served directly from GitHub Pages — no build step, no install needed. `pm-dashboard-standalone.html` and `project-management-app_React_index.html` are redirect stubs pointing to `index.html`, kept only so old bookmarks/links don't 404. The original React/Vite source lives in `react-src/`.
 
 ## Features
 

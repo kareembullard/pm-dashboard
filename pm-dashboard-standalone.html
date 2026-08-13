@@ -613,6 +613,15 @@ function renderDashboard() {
   const h2 = document.createElement("h2"); h2.textContent = "Project Dashboard";
   app.appendChild(h2);
 
+  const pmLinkNote = document.createElement("p"); pmLinkNote.className = "sub";
+  pmLinkNote.textContent = "This project's real-time task completion is also shown in Portfolio Dashboard (as RPC-2025), pulled live from this browser's data — no manual sync needed. ";
+  const pmLinkBtn = document.createElement("a");
+  pmLinkBtn.href = "https://kareembullard.github.io/portfolio-dashboard/#/project/RPC-2025";
+  pmLinkBtn.textContent = "View in Portfolio Dashboard →";
+  pmLinkBtn.target = "_blank"; pmLinkBtn.rel = "noopener";
+  pmLinkNote.appendChild(pmLinkBtn);
+  app.appendChild(pmLinkNote);
+
   app.appendChild(statGrid([
     ["Tasks Done", o.completedTasks],
     ["Tasks Remaining", o.remainingTasks],
